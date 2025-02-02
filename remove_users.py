@@ -180,7 +180,7 @@ def remove_expired_users(bot_gestao, group_id):
 def daily_task_scheduler(bot_gestao, group_id):
     while True:
         now = datetime.now()
-        if now.hour == 17 and now.minute == 36:
+        if now.hour == 1 and now.minute == 00:
             notify_users_about_expiration(bot_gestao)
             remove_expired_users(bot_gestao, group_id)
             time.sleep(60)
