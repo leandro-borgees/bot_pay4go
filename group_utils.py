@@ -7,19 +7,38 @@ import json
 def generate_group_link(bot_gestao, chat_id):
     """
     Gera um link dinâmico do grupo VIP utilizando o bot de gestão
-    e adiciona as informações do usuário ao arquivo JSON.
+    e adiciona as informações do usuário ao arquivo JSON
     """
+    
     try:
         # Define o tempo de expiração do link (1 hora)
 
         # Gera o link de convite
         invite_link = bot_gestao.create_chat_invite_link(
             chat_id=GROUP_ID,
-            expire_date=int((datetime.now() + timedelta(minutes=15)).timestamp()),  # Expira em 15 minutos
+            expire_date=int((datetime.now() + timedelta(minutes=10)).timestamp()),  # Expira em 15 minutos
             member_limit=1     # Um único uso
 
         )
         logging.info(f"Link gerado com sucesso: {invite_link.invite_link}")
+        
+        #selected_plan = user_plans.get(chat_id, "Desconhecido")
+        #plan_info = PLANS.get(selected_plan, (0, "Plano Desconhecido", 0))
+        #price = plan_info[0]
+
+        # Notifica os administradores sobre a venda
+        #for admin_id in NOTIFICATION_IDS:
+            #try:
+                #bot_gestao.send_message(
+                   # admin_id,
+                    #f"🎉 *VENDA REALIZADA COM SUCESSO!* 🎉\n\n"
+                    #"📊 **Detalhes da Transação:**\n"
+                    #f"👤 **Usuário:** [ID {chat_id}](tg://user?id={chat_id})\n"
+                    #f"💵 Valor: R${price:.2f}",
+                    #parse_mode="Markdown"
+                #)
+            #except Exception as e:
+                #print(f"Erro ao notificar administrador {admin_id}: {e}")
 
         # Obter o plano selecionado pelo usuário
         selected_plan = user_plans.get(chat_id)
@@ -62,8 +81,13 @@ def generate_group_link(bot_gestao, chat_id):
         with open(file_path, "w") as file:
             json.dump(data, file, indent=4)
 
+        logging.info(f"Novo usuário adicionado ao grupo VIP - ID: {chat_id}, Plano: {selected_plan}, Expira em: {expiry_date.strftime('%Y-%m-%d')}")
+    
+
         # Retorna o link gerado
         return invite_link.invite_link
+    
+            
 
     except Exception as e:
         logging.error(f"Erro ao gerar o link do grupo: {e}")
@@ -80,10 +104,28 @@ def generate_group_link_donwsell(bot_gestao, chat_id):
         # Gera o link de convite
         invite_link = bot_gestao.create_chat_invite_link(
             chat_id=GROUP_ID,
-            expire_date=int((datetime.now() + timedelta(minutes=15)).timestamp()),  # Expira em 15 minutos
+            expire_date=int((datetime.now() + timedelta(minutes=10)).timestamp()),  # Expira em 15 minutos
             member_limit=1     # Um único uso
         )
         logging.info(f"Link gerado com sucesso: {invite_link.invite_link}")
+        
+        #selected_plan = user_plans.get(chat_id, "Desconhecido")
+        #plan_info = PLANS_DOWNSELL.get(selected_plan, (0, "Plano Desconhecido", 0))
+        #price = plan_info[0]
+
+        # Notifica os administradores sobre a venda
+        #for admin_id in NOTIFICATION_IDS:
+            #try:
+                #bot_gestao.send_message(
+                    #admin_id,
+                    #f"🎉 *VENDA REALIZADA COM SUCESSO!* 🎉\n\n"
+                    #"📊 **Detalhes da Transação:**\n"
+                    #f"👤 **Usuário:** [ID {chat_id}](tg://user?id={chat_id})\n"
+                    #f"💵 Valor: R${price:.2f}",
+                    #parse_mode="Markdown"
+                #)
+            #except Exception as e:
+                #print(f"Erro ao notificar administrador {admin_id}: {e}")
         
         # Obter o plano selecionado pelo usuário
         selected_plan = user_plans.get(chat_id)
@@ -125,6 +167,9 @@ def generate_group_link_donwsell(bot_gestao, chat_id):
         # Salva os dados atualizados no arquivo JSON
         with open(file_path, "w") as file:
             json.dump(data, file, indent=4)
+            
+        logging.info(f"Novo usuário adicionado ao grupo VIP - ID: {chat_id}, Plano: {selected_plan}, Expira em: {expiry_date.strftime('%Y-%m-%d')}")
+
 
         # Retorna o link gerado
         return invite_link.invite_link
