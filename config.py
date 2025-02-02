@@ -1,4 +1,4 @@
-# Configurações do bot e API
+    # Configurações do bot e API
 import json
 import os
 
@@ -22,14 +22,14 @@ def load_bot_token():
 #TOKEN_BOT_CONVERSA = load_bot_token()
 
 TOKEN_BOT_CONVERSA = '7311553740:AAGnexxnHdPSAunECbOa3aBC67u_k434kXI'
-TOKEN_BOT_GESTAO = '7719880182:AAFYu9k4Dw0CZMWb-BX6Lv8azMHfD9ugLA8' 
+TOKEN_BOT_GESTAO = '7507543352:AAEzD0pEFmrE709dbruFU-zUvEYyOt8AO_4' 
 TOKEN_MERCADOPAGO = 'APP_USR-2179435799020724-091320-904084a56a6f1be88dc5073f27d65a08-270581412'
 CLIENTE_ID = 'Client_Id_fb6ae71e1705caf64079ae8e085ff132ba10f4b3'
 CLIENT_SECRET = 'Client_Secret_53e430bcbc2a5d329543d40778d9205bf5df9296'
 CERTIFICADO_EFI = 'producao-611378-deu certo_cert.pem'
 GROUP_LINK = 'https://t.me/+4n44cVujSHthNDlh'
 ID_DONO = 'SyncAdmin_bot'
-GROUP_ID = -1002215259001
+GROUP_ID = -1002385040786
 #GROUP_ID = -1002492656387
 PUSHINPAY_TOKEN = '12135|CiUHyafyGhi0uG8gLi6MQkm3Gm660SHV5jCWlzsWed4f5b87'
 PUSHINPAY_BASE_URL = 'https://api.pushinpay.com.br/api'
