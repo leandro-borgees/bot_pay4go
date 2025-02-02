@@ -621,7 +621,7 @@ def send_pix_code(bot_conversa, chat_id, plan, send_qr=True):
     markup = types.InlineKeyboardMarkup()
     pay_btn = types.InlineKeyboardButton("Verificar Pagamento", callback_data=f"verify_payment:{payment_id}")
     markup.add(pay_btn)
-    bot_conversa.send_message(chat_id, "✅ Após realizar o pagamento, clique no botão abaixo para verificar o status do pagamento:", reply_markup=markup)    
+    bot_conversa.send_message(chat_id, "✅ Após realizar o pagamento, seu link será automaticamente disponibilizado aqui. Se pagou e o link ainda não apareceu, clique no botão Verificar Pagamento:", reply_markup=markup)    
  
 
     # Adiciona o botão de verificar pagamento ao final
@@ -697,7 +697,7 @@ def send_pix_code_discounts(bot_conversa, chat_id, plan, send_qr=True):
     markup = types.InlineKeyboardMarkup()
     pay_btn = types.InlineKeyboardButton("Verificar Pagamento", callback_data=f"verify_payment_discounts:{payment_id}")
     markup.add(pay_btn)
-    bot_conversa.send_message(chat_id, "✅ Após realizar o pagamento, clique no botão abaixo para verificar o status do pagamento:", reply_markup=markup)
+    bot_conversa.send_message(chat_id, "✅ Após realizar o pagamento, seu link será automaticamente disponibilizado aqui. Se pagou e o link ainda não apareceu, clique no botão Verificar Pagamento:", reply_markup=markup)
  
 
 def send_pix_code_downsell(bot_conversa, chat_id, plan, send_qr=True):
@@ -760,7 +760,7 @@ def send_pix_code_downsell(bot_conversa, chat_id, plan, send_qr=True):
     markup = types.InlineKeyboardMarkup()
     pay_btn = types.InlineKeyboardButton("Verificar Pagamento", callback_data=f"verify_payment_downsell:{payment_id}")
     markup.add(pay_btn)
-    bot_conversa.send_message(chat_id, "✅ Após realizar o pagamento, clique no botão abaixo para verificar o status do pagamento:", reply_markup=markup)
+    bot_conversa.send_message(chat_id, "✅ Após realizar o pagamento, seu link será automaticamente disponibilizado aqui. Se pagou e o link ainda não apareceu, clique no botão Verificar Pagamento:", reply_markup=markup)
  
         #bot_conversa.send_message(chat_id, "🔗 Aqui está seu código Pix. Copie e pague no seu banco:", parse_mode="HTML")
         #bot_conversa.send_message(chat_id, pix_code_box, parse_mode="HTML", reply_markup=markup)
