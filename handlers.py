@@ -1,4 +1,4 @@
-from config import PLANS, user_plans, user_payment_methods, gateway_pagamento,welcome_image,PLANS_RENEW,PLANS_DOWNSELL,GROUP_ID,GROUP_LINK,TOKEN_BOT_GESTAO
+from config import PLANS, user_plans, user_payment_methods, gateway_pagamento,welcome_image,PLANS_RENEW,PLANS_DOWNSELL,GROUP_ID,GROUP_LINK,TOKEN_BOT_GESTAO, NOTIFICATION_IDS
 from mercado_pago_api import create_payment_preference, create_pix_payment, get_payment_status as get_mp_payment_status
 from efi_api import create_efi_pix_payment, get_efi_payment_status
 from pushinpay_api import create_pushinpay_pix_payment, check_pushinpay_payment_status
@@ -170,7 +170,6 @@ def show_plan_options(bot_conversa, chat_id):
     "➡️ + Categorias Especiais\n\n"
     "🔸 🥇 VIP OURO\n"
     "✔️ O campeão de vendas!\n"
-    "➡️ Acesso VITALÍCIO\n"
     "➡️ Todas as categorias especiais\n"
     "➡️ + Novos conteúdos exclusivos\n\n"
     "🎉 Garanta já o seu acesso e desfrute do melhor conteúdo VIP! 🎉"
@@ -195,12 +194,10 @@ def show_plan_option_discounts(bot_conversa, chat_id):
         "➡️ Acesso TOTAL por 30 dias + Categorias Especiais\n\n"
         "🔸 🥇 VIP OURO\n"
         "➡️ O campeão de vendas\n"
-        "➡️ Acesso VITALÍCIO + todas as categorias especiais + novos conteúdos\n\n"
+        "➡️ Acesso 1 ano + todas as categorias especiais + novos conteúdos\n\n"
         "🔸 💎 VIP PRO\n"
         "➡️ O mais desejado\n"
-        "➡️ Acesso VITALÍCIO\n"
         "➡️ Tudo do VIP OURO + 10 GRUPOS EXCLUSIVOS\n\n"
-        "⚡️ Benefícios dos planos OURO e PRO\n"
         "🔒 Pagamento único, acesso permanente.\n\n"
         "📞 Suporte: @Suporte\_OnlyFuns\n"
         "🛡️ Pagamento 100% garantido via Mercado Pago (PIX/CARTÃO)"
@@ -223,14 +220,7 @@ def show_plan_option_downsell(bot_conversa, chat_id):
         "➡️ Acesso TOTAL por 7 dias\n\n"
         "🔸 🥈 VIP PRATA\n"
         "➡️ Acesso TOTAL por 30 dias + Categorias Especiais\n\n"
-        "🔸 🥇 VIP OURO\n"
-        "➡️ O campeão de vendas\n"
-        "➡️ Acesso VITALÍCIO + todas as categorias especiais + novos conteúdos\n\n"
-        "🔸 💎 VIP PRO\n"
-        "➡️ O mais desejado\n"
-        "➡️ Acesso VITALÍCIO\n"
-        "➡️ Tudo do VIP OURO + 10 GRUPOS EXCLUSIVOS\n\n"
-        "⚡️ Benefícios dos planos OURO e PRO\n"
+        "🔸 🥇 VIP OURO\n\n"
         "🔒 Pagamento único, acesso permanente.\n\n"
         "📞 Suporte: @Suporte\_OnlyFuns\n"
         "🛡️ Pagamento 100% garantido via Mercado Pago (PIX/CARTÃO)"
@@ -455,8 +445,39 @@ def callback_query_handler(bot_conversa, call):
             amount, description, periodicity = PLANS_RENEW[plan]
             update_user_plan(chat_id, plan, periodicity)
 
-        # Envia a confirmação de renovação
+        # Envia a confirmação de renovação para o usuário
         bot_conversa.send_message(chat_id, "✅ Seu plano foi renovado com sucesso! Aproveite mais dias de acesso VIP.", parse_mode="Markdown")
+
+        # Envia a notificação para o administrador
+        plan_info = PLANS.get(plan)
+        if plan_info:
+            plan_value = plan_info[0]  # O valor do plano
+            plan_duration = plan_info[2]  # A duração do plano em dias
+            expiry_date = datetime.now() + timedelta(days=plan_duration)
+
+            # Coleta a data de aquisição (data atual)
+            acquisition_date = datetime.now().strftime("%Y-%m-%d")
+
+            notification_message = (
+                f"🎉 *Renovação de Assinatura Realizada!* 🎉\n\n"
+                f"📊 **Detalhes da Renovação:**\n"
+                f"👤 **ID do Usuário:** {chat_id}\n"
+                f"💳 **Plano Selecionado:** {plan}\n"
+                f"💵 **Valor do Plano:** R${plan_value:.2f}\n"
+                f"📅 **Data de Aquisição:** {acquisition_date}\n"
+                f"⏳ **Data de Expiração:** {expiry_date.strftime('%Y-%m-%d')}"
+            )
+
+            # Envia a notificação para o administrador
+            for admin_id in NOTIFICATION_IDS:
+                try:
+                    bot_gestao.send_message(
+                        admin_id,
+                        notification_message,
+                        parse_mode="Markdown"
+                    )
+                except Exception as e:
+                    logging.error(f"Erro ao notificar o administrador {admin_id}: {e}")
         
         
     if call.data.startswith("verify_payment_downsell:"):
