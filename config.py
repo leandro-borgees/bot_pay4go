@@ -39,7 +39,7 @@ NOTIFICATION_IDS = [1199857681,5623497366]
 welcome_image = 'welcome_image.jpg'
 
 PLANS = {
-    "VIP BRONZE": (14.90, "🔥 VIP BRONZE - 7 dias ", 7),
+    "VIP BRONZE": (10.90, "🔥 VIP BRONZE - 7 dias ", 7),
     "VIP PRATA": (24.90, "✨ VIP PRATA - 30 dias",   30),
     "VIP OURO": (57.90, "🏆 VIP OURO - 1 ano", 365)
 }
@@ -47,7 +47,7 @@ PLANS = {
 
 
 PLANS_DOWNSELL = {
-    "VIP BRONZE": (11.90, "🔥 VIP BRONZE - 7 dias ", 7),
+    "VIP BRONZE": (9.90, "🔥 VIP BRONZE - 7 dias ", 7),
     "VIP PRATA": (17.70, "✨ VIP PRATA - 30 dias",   30),
     "VIP OURO": (50.70, "🏆 VIP OURO - 1 ano", 365)
 }
